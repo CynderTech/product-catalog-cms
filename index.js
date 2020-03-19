@@ -3,7 +3,6 @@ const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 const { Text, Checkbox, Password } = require('@keystonejs/fields');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
-const { StaticApp } = require('@keystonejs/app-static');
 const initialiseData = require('./initial-data');
 const { File } = require('@keystonejs/fields');
 const { LocalFileAdapter } = require('@keystonejs/file-adapters');
@@ -17,6 +16,7 @@ const keystone = new Keystone({
 	name: PROJECT_NAME,
 	adapter: new Adapter(),
 	onConnect: initialiseData,
+	secureCookies: false,
 });
 
 // Access control functions
@@ -86,10 +86,6 @@ module.exports = {
 		new AdminUIApp({
 		enableDefaultRoute: true,
 		authStrategy,
-		}),
-		new StaticApp({
-			path: '/files',
-			src: './files'
 		}),
 	],
 };
